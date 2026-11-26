@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 55 - Paginación Simple</title>
+    <style>
+        body { font-family: sans-serif; padding: 24px; }
+        li { margin-bottom: 6px; }
+        button { padding: 8px 14px; margin-right: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Paginación de Elementos</h1>
+    <p>Página actual: <strong id="numPagina">1</strong> de 2</p>
+    <ul id="listaPaginada"></ul>
+
+    <button id="btnAnterior">Anterior</button>
+    <button id="btnSiguiente">Siguiente</button>
+
+    <script>
+        const elementos = [
+            "Elemento 1",
+            "Elemento 2",
+            "Elemento 3",
+            "Elemento 4",
+            "Elemento 5",
+            "Elemento 6"
+        ];
+
+        const porPagina = 3;
+        let paginaActual = 1;
+
+        const listaPaginada = document.getElementById("listaPaginada");
+        const numPagina = document.getElementById("numPagina");
+        const btnAnterior = document.getElementById("btnAnterior");
+        const btnSiguiente = document.getElementById("btnSiguiente");
+
+        function renderizarPagina() {
+            const inicio = (paginaActual - 1) * porPagina;
+            const fin = inicio + porPagina;
+            const visibles = elementos.slice(inicio, fin);
+
+            listaPaginada.innerHTML = "";
+            visibles.forEach((item) => {
+                const li = document.createElement("li");
+                li.textContent = item;
+                listaPaginada.appendChild(li);
+            });
+
+            numPagina.textContent = paginaActual;
+            btnAnterior.disabled = paginaActual === 1;
+            btnSiguiente.disabled = paginaActual === 2;
+        }
+
+        btnAnterior.addEventListener("click", () => {
+            if (paginaActual > 1) {
+                paginaActual--;
+                renderizarPagina();
+            }
+        });
+
+        btnSiguiente.addEventListener("click", () => {
+            if (paginaActual < 2) {
+                paginaActual++;
+                renderizarPagina();
+            }
+        });
+
+        renderizarPagina();
+    </script>
+</body>
+</html>
